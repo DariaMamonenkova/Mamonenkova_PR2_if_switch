@@ -1,11 +1,27 @@
+ //Мамоненкова
  #include <iostream>
 
  using namespace std;
 
+int inputInt(const char* prompt) {
+    int value;
+    cout << prompt;
+    while (!(cin >> value)) {
+        cout << "Ошибка! Введите целое число: ";
+        cin.clear();
+        cin.ignore(10000, '\n');
+    }
+    return value;
+}
+
 void IsPalindrome() {
     int number;
-    cout << "Введите трёхзначное число:\n";
-    cin >> number;
+    number = inputInt("Введите трёхзначное число:\n");
+    if (number < 100 || number > 999) {
+        cout << "Ошибка: Введите трёхзначное число: ";
+        cin.clear();
+        cin.ignore(10000, '\n');;
+    }
     if ((number / 100) == (number % 10)) {
         cout << "Число является палиндромом.\n";
     } else {
@@ -16,24 +32,30 @@ void IsPalindrome() {
 void IsArithmeticProgression() {
     int a, b, c;
     cout << "Введите три целых числа по возрастанию:\n";
-    cin >> a >> b >> c;
-    if ((a != b) && (b != c) && (a != c)) {
+    a = inputInt("Введите первое число: ");
+    b = inputInt("Введите второе число: ");
+    c = inputInt("Введите третье число: ");
+    if (((a != b) && (b != c) && (a != c)) && (a < b < c)) {
         if ((b - a) == (c - b)) {
             cout << "Числа образуют арифметическую прогрессию.\n";
         } else {
             cout << "Числа не образуют арифметическую прогрессию.\n";
         }
+    } else {
+        cout << "Числа должны быть различными и строго возрастающими!\n";
+        cin.clear();
+        cin.ignore(10000, '\n');
     }
 }
 
 void IsThereADate() {
-    int m, d;
+    int m = inputInt("Введите номер месяца: ");
     cout << "Введите номер месяца:\n";
-    cin >> m;
     if (1 > m || m > 12) {
         cout << "Номер месяца должен находиться в дипазоне от 1 до 12. Введите корректные данные.\n";
         return;
     }
+    int d = inputInt("Введите число месяца: ");
     int DaysInMonth;
     switch (m) {
         case 2: DaysInMonth = 29; break;
@@ -49,11 +71,12 @@ void IsThereADate() {
     }
 }
 
-//вспомогательная функция, определяющая високосный год или нет.
+//вспомогательная функция к заданию 4. Определяет, является год високосным или нет.
 bool IsLeapYear(int year) {
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 }
 
+//вспомогательная функция к заданию 4. Определяет количество дней в месяце.
 int DaysInMonth(int month, int year) {
     switch (month) {
         case 2: return IsLeapYear(year) ? 29 : 28;
@@ -63,13 +86,14 @@ int DaysInMonth(int month, int year) {
 }
 
 void DetermineTheDate() {
-    int d, m, g, n;
-    cout << "Введите дату в таком формате: день месяц год:\n";
-    cin >> d >> m >> g;
-    cout << "Введите количество дней:\n";
-    cin >> n;
+    int g = inputInt("Введите год: ");
+    int m = inputInt("Введите номер месяца(1-12): ");
+    int d = inputInt("Введите число месяца(1-31): ");
+    int n = inputInt("Введите количество дней n: ");
     if (m < 1 || m > 12 || d < 1 || d > DaysInMonth(m, g)) {
         cout << "Ошибка! Введите корректные данные.\n";
+        cin.clear();
+        cin.ignore(10000, '\n');
         return;
     }
     d += n;
@@ -92,15 +116,14 @@ int main() {
         cout << "Task 2. Определить, образуют ли три числа арифметическую прогрессию.\n";
         cout << "Task 3. Определить, есть ли введёная дата в высокосном году.\n";
         cout << "Task 4. Определить дату, через n дней после заданной.\n";
-        cout << "\n Пожалуйста, введите номер нужного задания или 0, если вы хотите закрыть приложение: \n";
-        cin >> funcSelect;
+        funcSelect = inputInt("\n Пожалуйста, введите номер нужного задания или 0, если вы хотите закрыть приложение: \n");
         switch (funcSelect) {
             case 0: cout << "Выход из программы.\n"; return 0;
             case 1: IsPalindrome(); break;
             case 2: IsArithmeticProgression(); break;
             case 3: IsThereADate(); break;
             case 4: DetermineTheDate(); break;
-            default: cout << "Неверный ввод. Попробуйте снова.\n";
+            default: cout << "Неккоректный ввод номера задания.\n"; break;
         }
     }
     return 0;
