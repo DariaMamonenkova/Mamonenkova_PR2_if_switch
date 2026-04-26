@@ -18,9 +18,8 @@ void IsPalindrome() {
     int number;
     number = inputInt("Введите трёхзначное число:\n");
     if (number < 100 || number > 999) {
-        cout << "Ошибка: Введите трёхзначное число: ";
-        cin.clear();
-        cin.ignore(10000, '\n');;
+        cout << "Ошибка: число не является трёхзначным.";
+        return;
     }
     if ((number / 100) == (number % 10)) {
         cout << "Число является палиндромом.\n";
@@ -35,7 +34,7 @@ void IsArithmeticProgression() {
     a = inputInt("Введите первое число: ");
     b = inputInt("Введите второе число: ");
     c = inputInt("Введите третье число: ");
-    if (((a != b) && (b != c) && (a != c)) && (a < b < c)) {
+    if (((a != b) && (b != c) && (a != c)) && (a < b) && (b < c)) {
         if ((b - a) == (c - b)) {
             cout << "Числа образуют арифметическую прогрессию.\n";
         } else {
@@ -43,14 +42,12 @@ void IsArithmeticProgression() {
         }
     } else {
         cout << "Числа должны быть различными и строго возрастающими!\n";
-        cin.clear();
-        cin.ignore(10000, '\n');
+        return;
     }
 }
 
 void IsThereADate() {
     int m = inputInt("Введите номер месяца: ");
-    cout << "Введите номер месяца:\n";
     if (1 > m || m > 12) {
         cout << "Номер месяца должен находиться в дипазоне от 1 до 12. Введите корректные данные.\n";
         return;
@@ -62,8 +59,6 @@ void IsThereADate() {
         case 4: case 6: case 9: case 11: DaysInMonth = 30; break;
         default: DaysInMonth = 31;
     }
-    cout << "Введите число месяца:\n" ;
-    cin >> d;
     if (d >= 1 && d <= DaysInMonth) {
         cout << "Дата " << d << "." << m << " существует в высокосном году.\n";
     } else {
@@ -92,8 +87,6 @@ void DetermineTheDate() {
     int n = inputInt("Введите количество дней n: ");
     if (m < 1 || m > 12 || d < 1 || d > DaysInMonth(m, g)) {
         cout << "Ошибка! Введите корректные данные.\n";
-        cin.clear();
-        cin.ignore(10000, '\n');
         return;
     }
     d += n;
