@@ -1,3 +1,4 @@
+//Мамоненкова
 #include <iostream>
 #include <cmath>
 #include <numeric>
